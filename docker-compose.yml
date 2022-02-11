@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+  adguardhome:
+    image: adguard/adguardhome
+    container_name: adguardhome
+    restart: unless-stopped
+    volumes:
+      - "./adguardhome/work:/opt/adguardhome/work"
+      - "./adguardhome/conf:/opt/adguardhome/conf"
+    ports:
+      - "53:53/tcp" # Plain DNS
+      - "53:53/udp" # Plain DNS
+      - "80:80/tcp" # Admin panel and HTTPS/DNS-over-HTTPS server
+      - "443:443/tcp" # Admin panel and HTTPS/DNS-over-HTTPS server
+      - "443:443/udp" # Admin panel and HTTPS/DNS-over-HTTPS server
+      - "3000:3000/tcp" # Admin panel and HTTPS/DNS-over-HTTPS server
+    network_mode: host
+  unbound:
+    image: mvance/unbound:latest
+    container_name: unbound
+    restart: unless-stopped
+    volumes:
+      - "./unbound:/opt/unbound/etc/unbound/"
+    ports:
+      - "5353:53/tcp"
+      - "5353:53/udp"
