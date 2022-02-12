@@ -14,13 +14,6 @@ services:
       - "443:443/tcp" # Admin panel and HTTPS/DNS-over-HTTPS server
       - "443:443/udp" # Admin panel and HTTPS/DNS-over-HTTPS server
       - "3000:3000/tcp" # Admin panel and HTTPS/DNS-over-HTTPS server
-    network_mode: host
-  unbound:
-    image: mvance/unbound:latest
-    container_name: unbound
-    restart: unless-stopped
-    volumes:
-      - "./unbound:/opt/unbound/etc/unbound/"
-    ports:
-      - "5353:53/tcp"
-      - "5353:53/udp"
+      #- "853:853/tcp" # DNS-over-TLS
+      #- "5443:5443/tcp" # DNSCrypt
+      #- "5443:5443/upd" # DNSCrypt
